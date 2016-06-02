@@ -11,6 +11,7 @@
 1.  Fork and clone this repository.
 1.  Change into the new directory.
 1.  Create and checkout a new branch to work on.
+1.  Write your code in atc.js
 1.  Fulfill the listed requirements.
 
 ## Requirements
@@ -33,10 +34,10 @@ The process which manages the queue of AC satisfies the following:
   - There is no limit on the number of AC it can manage.
   - Dequeue aircraft requests result in selection of one AC for removal such
     that:
-  - Passenger AC have removal precedence over Cargo AC.
-  - Large AC of a given type have removal precedence over Small AC of the
+    - Passenger AC have removal precedence over Cargo AC.
+    - Large AC of a given type have removal precedence over Small AC of the
       same type.
-  - Earlier enqueued AC of a given type and size have precedence over later
+    - Earlier enqueued AC of a given type and size have precedence over later
       enqueued AC of the same type and size.
 
 ## [License](LICENSE)
