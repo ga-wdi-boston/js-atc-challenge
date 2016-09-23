@@ -1,4 +1,5 @@
 'use strict';
+const readline = require('readline');
 
 /*
 Requirements
@@ -36,7 +37,12 @@ class AC {
 }
 
 let Enqueue = function () {
-  let ac = new AC('passenger', 'large');
+  console.log('What type of plane? (passenger/cargo): ');
+  // let inputType = readLine();
+  // let inputSize = prompt('What size of plane? (large/small): ');
+  // figure out why these dont work.
+
+  let ac = new AC(inputType, 'large');
   array.push(ac);
 };
 
