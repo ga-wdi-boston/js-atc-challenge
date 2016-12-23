@@ -11,7 +11,7 @@
 1.  Fork and clone this repository.
 1.  Change into the new directory.
 1.  Create and checkout a new branch to work on.
-1.  Write your code in atc.js
+  1.  Write your code in [`lib/atc.js`](lib/atc.js)
 1.  Fulfill the listed requirements.
 
 ## Requirements
