@@ -8,7 +8,7 @@ chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 
-const Atc = require('../lib/atc');
+const Atc = require('../lib/challenge');
 
 describe('atc', function () {
   describe('enqueue aircraft', function() {
