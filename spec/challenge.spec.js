@@ -11,8 +11,8 @@ const expect = chai.expect;
 const Atc = require('../lib/challenge');
 
 describe('atc', function () {
-  describe('enqueue aircraft', function() {
-    beforeEach(function() {
+  describe('enqueue aircraft', function () {
+    beforeEach(function () {
       this.atc = new Atc();
       this.aircraft = {
         type: 'passenger',
@@ -22,29 +22,29 @@ describe('atc', function () {
     it('has an aircraft queue', function () {
       expect(this.atc.aircraftQueue instanceof Array).to.be.true;
     });
-    it('can enqueue an aircraft', function() {
+    it('can enqueue an aircraft', function () {
       this.atc.enqueue(this.aircraft);
       expect(this.atc.aircraftQueue.length).to.eq(1);
       expect(this.atc.aircraftQueue.indexOf(this.aircraft)).not.to.eq(-1);
     });
   });
-  describe('dequeue aircraft', function() {
-    beforeEach(function() {
+  describe('dequeue aircraft', function () {
+    beforeEach(function () {
       this.passengerPlaneSmall = {
         type: 'passenger',
-        size: 'small'
+        size: 'small',
       };
       this.passengerPlaneLarge = {
         type: 'passenger',
-        size: 'large'
+        size: 'large',
       };
       this.cargoPlaneSmall = {
         type: 'cargo',
-        size: 'small'
+        size: 'small',
       };
       this.cargoPlaneLarge = {
         type: 'cargo',
-        size: 'large'
+        size: 'large',
       };
       this.atc = new Atc();
     });
@@ -95,11 +95,12 @@ describe('atc', function () {
     describe('dequeues planes of equal importance in the order they were enqueued', function () {
       beforeEach(function () {
         this.atc = new Atc();
+
         // add order to planes
-        this.firstCargoPlane = Object.assign(this.cargoPlaneLarge, { order: 'first'});
-        this.secondCargoPlane = Object.assign(this.cargoPlaneLarge, { order: 'second'});
-        this.firstPassengerPlane = Object.assign(this.passengerPlaneSmall, { order: 'first'});
-        this.secondPassengerPlane = Object.assign(this.passengerPlaneSmall, { order: 'second'});
+        this.firstCargoPlane = Object.assign(this.cargoPlaneLarge, { order: 'first' });
+        this.secondCargoPlane = Object.assign(this.cargoPlaneLarge, { order: 'second' });
+        this.firstPassengerPlane = Object.assign(this.passengerPlaneSmall, { order: 'first' });
+        this.secondPassengerPlane = Object.assign(this.passengerPlaneSmall, { order: 'second' });
 
         this.atc.enqueue(this.firstPassengerPlane);
         this.atc.enqueue(this.firstCargoPlane);
