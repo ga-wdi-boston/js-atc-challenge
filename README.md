@@ -17,17 +17,19 @@
 ## Requirements
 
 A software subsystem of an air-traffic control system is defined to manage a
-queue of aircraft (AC) in an airport. The aircraft queue is managed by a
-process which responds to three types of requests:
+queue of aircraft (AC) in an airport. Write a constructor function, `AtcQueue`,
+that creates an aircraft queue (`aircraftQueue`).
 
-  - System boot used to start the system.
+The aircraft queue is managed by a
+process which responds to two types of requests:
+
   - Enqueue aircraft used to insert a new AC into the system.
   - Dequeue aircraft used to remove an AC from the system.
 
 AC have at least (but are not limited to having) the following properties:
 
-  - AC type: Passenger or Cargo.
-  - AC size: Small or Large.
+  - AC type: passenger or cargo.
+  - AC size: small or large.
 
 The process which manages the queue of AC satisfies the following:
 
