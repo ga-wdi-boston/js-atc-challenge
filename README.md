@@ -18,18 +18,19 @@
 
 A software subsystem of an air-traffic control system is defined to manage a
 queue of aircraft (AC) in an airport. Write a constructor function, `AtcQueue`,
-that creates an aircraft queue (`aircraftQueue`).
+that creates an aircraft queue.
 
 The aircraft queue is managed by a
-process which responds to two types of requests:
+process which responds to three types of requests:
 
-  - Enqueue aircraft used to insert a new AC into the system.
-  - Dequeue aircraft used to remove an AC from the system.
+  - Enqueue aircraft used to insert a new AC into the system. `enqueue`
+  - Dequeue aircraft used to remove an AC from the system. `dequeue`
+  - AircraftCount used to count the aircraft in the queue. `aircraftCount`
 
 AC have at least (but are not limited to having) the following properties:
 
-  - AC type: passenger or cargo.
-  - AC size: small or large.
+  - AC `type`: passenger or cargo.
+  - AC `size`: small or large.
 
 The process which manages the queue of AC satisfies the following:
 
@@ -41,6 +42,8 @@ The process which manages the queue of AC satisfies the following:
       same type.
     - Earlier enqueued AC of a given type and size have precedence over later
       enqueued AC of the same type and size.
+
+Use `grunt test` to test your code.
 
 ## [License](LICENSE)
 

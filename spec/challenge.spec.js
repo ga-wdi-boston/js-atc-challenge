@@ -19,13 +19,10 @@ describe('atc', function () {
         size: 'small',
       };
     });
-    it('has an aircraft queue', function () {
-      expect(this.atc.aircraftQueue instanceof Array).to.be.true;
-    });
     it('can enqueue an aircraft', function () {
+      expect(this.atc.aircraftCount()).to.eq(0);
       this.atc.enqueue(this.aircraft);
-      expect(this.atc.aircraftQueue.length).to.eq(1);
-      expect(this.atc.aircraftQueue.indexOf(this.aircraft)).not.to.eq(-1);
+      expect(this.atc.aircraftCount()).to.eq(1);
     });
   });
   describe('dequeue aircraft', function () {
@@ -51,11 +48,10 @@ describe('atc', function () {
     it('dequeues planes', function () {
       this.atc.enqueue(this.passengerPlaneLarge);
       this.atc.enqueue(this.cargoPlaneLarge);
-
-      expect(this.atc.aircraftQueue.length).to.eq(2);
+      expect(this.atc.aircraftCount()).to.eq(2);
 
       this.atc.dequeue();
-      expect(this.atc.aircraftQueue.length).to.eq(1);
+      expect(this.atc.aircraftCount()).to.eq(1);
     });
     it('dequeues passenger planes before cargo planes', function () {
       this.atc.enqueue(this.passengerPlaneLarge);
