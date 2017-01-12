@@ -11,23 +11,26 @@
 1.  Fork and clone this repository.
 1.  Change into the new directory.
 1.  Create and checkout a new branch to work on.
-1.  Write your code in atc.js
+  1.  Write your code in [`lib/atc.js`](lib/atc.js)
 1.  Fulfill the listed requirements.
 
 ## Requirements
 
 A software subsystem of an air-traffic control system is defined to manage a
-queue of aircraft (AC) in an airport. The aircraft queue is managed by a
+queue of aircraft (AC) in an airport. Write a constructor function, `AtcQueue`,
+that creates an aircraft queue.
+
+The aircraft queue is managed by a
 process which responds to three types of requests:
 
-  - System boot used to start the system.
-  - Enqueue aircraft used to insert a new AC into the system.
-  - Dequeue aircraft used to remove an AC from the system.
+  - Enqueue aircraft used to insert a new AC into the system. `enqueue`
+  - Dequeue aircraft used to remove an AC from the system. `dequeue`
+  - AircraftCount used to count the aircraft in the queue. `aircraftCount`
 
 AC have at least (but are not limited to having) the following properties:
 
-  - AC type: Passenger or Cargo.
-  - AC size: Small or Large.
+  - AC `type`: passenger or cargo.
+  - AC `size`: small or large.
 
 The process which manages the queue of AC satisfies the following:
 
@@ -40,7 +43,10 @@ The process which manages the queue of AC satisfies the following:
     - Earlier enqueued AC of a given type and size have precedence over later
       enqueued AC of the same type and size.
 
+Use `grunt test` to test your code.
+
 ## [License](LICENSE)
 
-Source code distributed under the MIT license. Text and other assets copyright
-General Assembly, Inc., all rights reserved.
+1.  All content is licensed under a CC­BY­NC­SA 4.0 license.
+1.  All software code is licensed under GNU GPLv3. For commercial use or
+    alternative licensing, please contact legal@ga.co.
