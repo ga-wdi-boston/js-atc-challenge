@@ -64,6 +64,15 @@ on **only after** passing requirements.
 
 Sometimes, we ask questions that promote thinking critically about code.
 
+## Tasks
+
+Developers should run these often!
+
+-   `grunt nag` or just `grunt`: runs code quality analysis tools on your code
+    and complains.
+-   `grunt reformat`: reformats all your code in a standard style.
+-   `grunt test`: runs any automated tests; may depend on `grunt build`.
+
 ## [License](LICENSE)
 
 1.  All content is licensed under a CC­BY­NC­SA 4.0 license.
