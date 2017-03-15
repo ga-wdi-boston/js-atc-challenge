@@ -4,15 +4,22 @@
 
 ## Prerequisites
 
--   [ga-wdi-boston/js-objects-stack-challenge](https://github.com/ga-wdi-boston/js-objects-stack-challenge)
+-   [JavaScript Objects Stack Challenge](https://github.com/ga-wdi-boston/js-objects-stack-challenge)
 
 ## Instructions
 
 1.  Fork and clone this repository.
 1.  Change into the new directory.
+1.  Install dependencies.
 1.  Create and checkout a new branch to work on.
-  1.  Write your code in [`lib/atc.js`](lib/atc.js)
 1.  Fulfill the listed requirements.
+
+Starter code is available in [`lib/challenge.js`](lib/challenge.js). A pull
+request is not required, but it is necessary if you want a code review.
+
+You may wish to refer to [FAQs](https://github.com/ga-wdi-boston/meta/wiki/)
+related to [forking,
+cloning](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone).
 
 ## Requirements
 
@@ -44,6 +51,18 @@ The process which manages the queue of AC satisfies the following:
       enqueued AC of the same type and size.
 
 Use `grunt test` to test your code.
+
+You should be running `grunt nag` before diagnosing any bugs, since it finds
+some of the most common sources of errors. After `grunt nag` passes, you should
+run `grunt test` to run the included tests. Tests will tell you whether of not
+you've met these requirements.
+
+## Bonus
+
+Bonuses are described after the requirements, if included. They should be worked
+on **only after** passing requirements.
+
+Sometimes, we ask questions that promote thinking critically about code.
 
 ## [License](LICENSE)
 
