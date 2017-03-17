@@ -1,127 +1,104 @@
-'use strict';
+'use strict'
 
-// Allow chai syntax like `expect(foo).to.be.ok;`
-// jshint -W030
+const chai = require('chai')
+const chaiAsPromised = require('chai-as-promised')
 
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised)
 
-chai.use(chaiAsPromised);
+const expect = chai.expect
 
-const expect = chai.expect;
+const ATCQueue = require('../lib/challenge')
 
-const Atc = require('../lib/challenge');
+const passengerLarge = { type: 'passenger', size: 'large' }
+const passengerSmall = { type: 'passenger', size: 'small' }
+const cargoLarge = { type: 'cargo', size: 'large' }
+const cargoSmall = { type: 'cargo', size: 'small' }
+const aircrafts = [passengerLarge, passengerSmall, cargoLarge, cargoSmall]
 
-describe('atc', function () {
-  describe('enqueue aircraft', function () {
-    beforeEach(function () {
-      this.atc = new Atc();
-      this.aircraft = {
-        type: 'passenger',
-        size: 'small',
-      };
-    });
-    it('can enqueue an aircraft', function () {
-      expect(this.atc.aircraftCount()).to.eq(0);
-      this.atc.enqueue(this.aircraft);
-      expect(this.atc.aircraftCount()).to.eq(1);
-    });
-  });
-  describe('dequeue aircraft', function () {
-    beforeEach(function () {
-      this.passengerPlaneSmall = {
-        type: 'passenger',
-        size: 'small',
-      };
-      this.passengerPlaneLarge = {
-        type: 'passenger',
-        size: 'large',
-      };
-      this.cargoPlaneSmall = {
-        type: 'cargo',
-        size: 'small',
-      };
-      this.cargoPlaneLarge = {
-        type: 'cargo',
-        size: 'large',
-      };
-      this.atc = new Atc();
-    });
-    it('dequeues planes', function () {
-      this.atc.enqueue(this.passengerPlaneLarge);
-      this.atc.enqueue(this.cargoPlaneLarge);
-      expect(this.atc.aircraftCount()).to.eq(2);
+describe('ATCQueue', () => {
+  beforeEach(() => {
+    this.atcQueue = new ATCQueue()
+  })
 
-      this.atc.dequeue();
-      expect(this.atc.aircraftCount()).to.eq(1);
-    });
-    it('dequeues passenger planes before cargo planes', function () {
-      this.atc.enqueue(this.passengerPlaneLarge);
-      this.atc.enqueue(this.cargoPlaneLarge);
-      this.atc.enqueue(this.passengerPlaneLarge);
+  describe('aircraftCount()', () => {
+    it('returns 0 if the aircraft queue is empty', () => {
+      expect(this.atcQueue.aircraftCount()).to.equal(0)
+    })
+  })
 
-      const dequeuedPlane = this.atc.dequeue();
-      const secondDequeuedPlane = this.atc.dequeue();
+  describe('enqueue()', () => {
+    it('adds aircrafts to the queue', () => {
+      aircrafts.forEach((aircraft, index) => {
+        this.atcQueue.enqueue(aircraft)
 
-      expect(dequeuedPlane).to.deep.eq(this.passengerPlaneLarge);
-      expect(secondDequeuedPlane).to.deep.eq(this.passengerPlaneLarge);
-    });
-    it('dequeues large passenger planes before small passenger planes', function () {
-      this.atc.enqueue(this.passengerPlaneLarge);
-      this.atc.enqueue(this.passengerPlaneSmall);
-      this.atc.enqueue(this.passengerPlaneSmall);
-      this.atc.enqueue(this.passengerPlaneLarge);
+        expect(this.atcQueue.aircraftCount()).to.equal(index + 1)
+      })
+    })
+  })
 
-      const dequeuedPlane = this.atc.dequeue();
-      const secondDequeuedPlane = this.atc.dequeue();
+  describe('dequeue()', () => {
+    it('removes aircrafts from the queue', () => {
+      aircrafts.forEach(aircraft => this.atcQueue.enqueue(aircraft))
 
-      expect(dequeuedPlane).to.deep.eq(this.passengerPlaneLarge);
-      expect(secondDequeuedPlane).to.deep.eq(this.passengerPlaneLarge);
-    });
-    it('dequeues large cargo planes before small cargo planes', function () {
-      this.atc.enqueue(this.cargoPlaneLarge);
-      this.atc.enqueue(this.cargoPlaneSmall);
-      this.atc.enqueue(this.cargoPlaneSmall);
-      this.atc.enqueue(this.cargoPlaneLarge);
+      for (let i = 1; i <= aircrafts.length; i++) {
+        this.atcQueue.dequeue()
 
-      const dequeuedPlane = this.atc.dequeue();
-      const secondDequeuedPlane = this.atc.dequeue();
+        expect(this.atcQueue.aircraftCount()).to.equal(aircrafts.length - i)
+      }
+    })
 
-      expect(dequeuedPlane).to.deep.eq(this.cargoPlaneLarge);
-      expect(secondDequeuedPlane).to.deep.eq(this.cargoPlaneLarge);
-    });
-    describe('dequeues planes of equal importance in the order they were enqueued', function () {
-      beforeEach(function () {
-        this.atc = new Atc();
+    it('removes passenger aircrafts before cargo aircrafts', () => {
+      this.atcQueue.enqueue(cargoSmall)
+      this.atcQueue.enqueue(passengerSmall)
+      this.atcQueue.enqueue(passengerLarge)
+      this.atcQueue.enqueue(cargoLarge)
 
-        // add order to planes
-        this.firstCargoPlane = Object.assign(this.cargoPlaneLarge, { order: 'first' });
-        this.secondCargoPlane = Object.assign(this.cargoPlaneLarge, { order: 'second' });
-        this.firstPassengerPlane = Object.assign(this.passengerPlaneSmall, { order: 'first' });
-        this.secondPassengerPlane = Object.assign(this.passengerPlaneSmall, { order: 'second' });
+      expect(this.atcQueue.dequeue()).to.have.property('type', 'passenger')
+      expect(this.atcQueue.dequeue()).to.have.property('type', 'passenger')
+      expect(this.atcQueue.dequeue()).to.have.property('type', 'cargo')
+      expect(this.atcQueue.dequeue()).to.have.property('type', 'cargo')
+    })
 
-        this.atc.enqueue(this.firstPassengerPlane);
-        this.atc.enqueue(this.firstCargoPlane);
-        this.atc.enqueue(this.secondCargoPlane);
-        this.atc.enqueue(this.secondPassengerPlane);
+    it('removes large aircrafts before small aircrafts of the same type', () => {
+      this.atcQueue.enqueue(cargoSmall)
+      this.atcQueue.enqueue(passengerSmall)
+      this.atcQueue.enqueue(passengerLarge)
+      this.atcQueue.enqueue(cargoLarge)
 
-        this.firstDequeued = this.atc.dequeue();
-        this.secondDequeued = this.atc.dequeue();
-        this.thirdDequeued = this.atc.dequeue();
-        this.fourthDequeued = this.atc.dequeue();
-      });
-      it('dequeues the first plane correctly', function () {
-        expect(this.firstDequeued).to.deep.eq(this.firstPassengerPlane);
-      });
-      it('dequeues the second plane correctly', function () {
-        expect(this.secondDequeued).to.deep.eq(this.secondPassengerPlane);
-      });
-      it('dequeues the third plane correctly', function () {
-        expect(this.thirdDequeued).to.deep.eq(this.firstCargoPlane);
-      });
-      it('dequeues the fourth plane correctly', function () {
-        expect(this.fourthDequeued).to.deep.eq(this.secondCargoPlane);
-      });
-    });
-  });
-});
+      expect(this.atcQueue.dequeue()).to.deep.equal(passengerLarge)
+      expect(this.atcQueue.dequeue()).to.deep.equal(passengerSmall)
+      expect(this.atcQueue.dequeue()).to.deep.equal(cargoLarge)
+      expect(this.atcQueue.dequeue()).to.deep.equal(cargoSmall)
+    })
+
+    it('removes earlier enqueued aircrafts of the same type and size first', () => {
+      const firstPassengerLarge = Object.assign({ order: 1 }, passengerLarge)
+      const secondPassengerLarge = Object.assign({ order: 2 }, passengerLarge)
+      const firstPassengerSmall = Object.assign({ order: 1 }, passengerSmall)
+      const secondPassengerSmall = Object.assign({ order: 2 }, passengerSmall)
+      const firstCargoLarge = Object.assign({ order: 1 }, cargoLarge)
+      const secondCargoLarge = Object.assign({ order: 2 }, cargoLarge)
+      const firstCargoSmall = Object.assign({ order: 1 }, cargoSmall)
+      const secondCargoSmall = Object.assign({ order: 2 }, cargoSmall)
+
+                                                  // Expected dequeue order
+      this.atcQueue.enqueue(firstCargoSmall)      // 7
+      this.atcQueue.enqueue(firstPassengerSmall)  // 3
+      this.atcQueue.enqueue(firstPassengerLarge)  // 1
+      this.atcQueue.enqueue(firstCargoLarge)      // 5
+      this.atcQueue.enqueue(secondCargoSmall)     // 8
+      this.atcQueue.enqueue(secondPassengerSmall) // 4
+      this.atcQueue.enqueue(secondPassengerLarge) // 2
+      this.atcQueue.enqueue(secondCargoLarge)     // 6
+
+      expect(this.atcQueue.dequeue()).to.deep.equal(firstPassengerLarge)
+      expect(this.atcQueue.dequeue()).to.deep.equal(secondPassengerLarge)
+      expect(this.atcQueue.dequeue()).to.deep.equal(firstPassengerSmall)
+      expect(this.atcQueue.dequeue()).to.deep.equal(secondPassengerSmall)
+      expect(this.atcQueue.dequeue()).to.deep.equal(firstCargoLarge)
+      expect(this.atcQueue.dequeue()).to.deep.equal(secondCargoLarge)
+      expect(this.atcQueue.dequeue()).to.deep.equal(firstCargoSmall)
+      expect(this.atcQueue.dequeue()).to.deep.equal(secondCargoSmall)
+    })
+  })
+})
