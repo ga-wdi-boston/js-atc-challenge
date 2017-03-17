@@ -27,30 +27,30 @@ A software subsystem of an air traffic control system is defined to manage a
 queue of aircrafts at an airport. Write a constructor function, `ATCQueue`,
 that creates an aircraft queue.
 
-The aircraft queue is managed by a
-process which responds to three types of requests:
+The aircraft queue is managed by a process that responds to three types of
+requests:
 
-  - Enqueue aircraft used to insert a new AC into the system. `enqueue`
-  - Dequeue aircraft used to remove an AC from the system. `dequeue`
-  - AircraftCount used to count the aircraft in the queue. `aircraftCount`
+| Request | Action |
+| --- | --- |
+| `aircraftCount()` | Counts the number of aircrafts in the queue. |
+| `enqueue()` | Add an aircraft to the queue. |
+| `dequeue()` | Remove an aircraft from the queue. |
 
-AC have at least (but are not limited to having) the following properties:
+Aircrafts have at least, but are not limited to, the following properties.
 
-  - AC `type`: passenger or cargo.
-  - AC `size`: small or large.
+| Property | Value |
+| --- | --- |
+| `type` | `passenger` or `cargo` |
+| `size` | `small` or `large` |
 
-The process which manages the queue of AC satisfies the following:
-
-  - There is no limit on the number of AC it can manage.
-  - Dequeue aircraft requests result in selection of one AC for removal such
-    that:
-    - Passenger AC have removal precedence over Cargo AC.
-    - Large AC of a given type have removal precedence over Small AC of the
-      same type.
-    - Earlier enqueued AC of a given type and size have precedence over later
-      enqueued AC of the same type and size.
-
-Use `grunt test` to test your code.
+The process that manages the aircraft queue satisfies the following conditions.
+-   There is no limit on the size of the aircraft queue.
+-   Aircrafts are dequeued according to their priority.
+    -   Passenger aircrafts have higher priority than cargo aircrafts.
+    -   If two aircrafts have the same type but different sizes, then the large
+        aircraft has a higher priority.
+    -   If there is more than one aircraft with the same type and size, then the
+        aircraft that was enqueued earlier has higher priority.
 
 You should be running `grunt nag` before diagnosing any bugs, since it finds
 some of the most common sources of errors. After `grunt nag` passes, you should
