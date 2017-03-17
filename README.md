@@ -23,8 +23,8 @@ cloning](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone).
 
 ## Requirements
 
-A software subsystem of an air-traffic control system is defined to manage a
-queue of aircraft (AC) in an airport. Write a constructor function, `AtcQueue`,
+A software subsystem of an air traffic control system is defined to manage a
+queue of aircrafts at an airport. Write a constructor function, `ATCQueue`,
 that creates an aircraft queue.
 
 The aircraft queue is managed by a
