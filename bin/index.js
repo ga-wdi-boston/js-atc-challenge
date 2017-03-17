@@ -1,21 +1,9 @@
 #!/usr/bin/env node
 'use strict'
 
-const example = require('../lib/example')
+const Mocha = require('mocha')
+const mocha = new Mocha()
 
-const success = (data) => console.log('data', data)
-const failure = (error) => console.error('error', error)
+mocha.addFile('./spec/challenge.spec')
 
-success(example.sync(false))
-
-example.async(false, (error, data) => {
-  if (error) {
-    failure(error)
-  } else {
-    success(data)
-  }
-})
-
-example.promise(false)
-  .then(success)
-  .catch(failure)
+mocha.run()
