@@ -55,20 +55,22 @@ describe('ATCQueue', () => {
 
       expect(this.atcQueue.dequeue()).to.have.property('type', 'passenger')
       expect(this.atcQueue.dequeue()).to.have.property('type', 'passenger')
-      expect(this.atcQueue.dequeue()).to.have.property('type', 'cargo')
-      expect(this.atcQueue.dequeue()).to.have.property('type', 'cargo')
     })
 
-    it('removes large aircrafts before small aircrafts of the same type', () => {
-      this.atcQueue.enqueue(cargoSmall)
+    it('removes large passenger aircrafts before small passenger aircrafts', () => {
       this.atcQueue.enqueue(passengerSmall)
       this.atcQueue.enqueue(passengerLarge)
-      this.atcQueue.enqueue(cargoLarge)
+      this.atcQueue.enqueue(passengerSmall)
 
       expect(this.atcQueue.dequeue()).to.deep.equal(passengerLarge)
-      expect(this.atcQueue.dequeue()).to.deep.equal(passengerSmall)
+    })
+
+    it('removes large cargo aircrafts before small cargo aircrafts', () => {
+      this.atcQueue.enqueue(cargoSmall)
+      this.atcQueue.enqueue(cargoLarge)
+      this.atcQueue.enqueue(cargoSmall)
+
       expect(this.atcQueue.dequeue()).to.deep.equal(cargoLarge)
-      expect(this.atcQueue.dequeue()).to.deep.equal(cargoSmall)
     })
 
     it('removes earlier enqueued aircrafts of the same type and size first', () => {
