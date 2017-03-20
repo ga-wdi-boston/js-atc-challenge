@@ -23,25 +23,26 @@ cloning](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone).
 
 ## Requirements
 
-A software subsystem of an air traffic control system is defined to manage a
-queue of aircrafts at an airport. Write a constructor function, `ATCQueue`,
-that creates an aircraft queue.
+We have been contracted to write a software subsystem for an air traffic control
+system. This software manages a queue of aircrafts and prioritizes the orders of
+take offs and landings based on the aircraft's type and size. Write a
+constructor function, `ATCQueue`, that creates and manages the aircraft queue.
 
-The aircraft queue is managed by a process that responds to three types of
-requests:
-
-| Request | Action |
-| --- | --- |
-| `aircraftCount()` | Counts the number of aircrafts in the queue. |
-| `enqueue()` | Add an aircraft to the queue. |
-| `dequeue()` | Remove an aircraft from the queue. |
-
-Aircrafts have at least, but are not limited to, the following properties.
+Aircrafts are represented by objects that have at least, but are not limited to,
+the following properties.
 
 | Property | Value |
-| --- | --- |
+| - | - |
 | `type` | `passenger` or `cargo` |
 | `size` | `small` or `large` |
+
+The aircraft queue should implement the following interface.
+
+| Method | Parameters | Return | Notes |
+| - | - | - | - |
+| `aircraftCount()` | None | Integer | Count the number of aircrafts in the queue. |
+| `enqueue()` | Aircraft | None | Add an aircraft to the queue. |
+| `dequeue()` | None | Aircraft | Remove an aircraft from the queue and return it. |
 
 The process that manages the aircraft queue satisfies the following conditions.
 -   There is no limit on the size of the aircraft queue.
