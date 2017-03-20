@@ -4,46 +4,68 @@
 
 ## Prerequisites
 
--   [ga-wdi-boston/js-objects-stack-challenge](https://github.com/ga-wdi-boston/js-objects-stack-challenge)
+-   [JavaScript Objects Stack Challenge](https://github.com/ga-wdi-boston/js-objects-stack-challenge)
 
 ## Instructions
 
 1.  Fork and clone this repository.
 1.  Change into the new directory.
+1.  Install dependencies.
 1.  Create and checkout a new branch to work on.
-  1.  Write your code in [`lib/atc.js`](lib/atc.js)
 1.  Fulfill the listed requirements.
+
+Starter code is available in [`lib/challenge.js`](lib/challenge.js). A pull
+request is not required, but it is necessary if you want a code review.
+
+You may wish to refer to [FAQs](https://github.com/ga-wdi-boston/meta/wiki/)
+related to [forking,
+cloning](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone).
 
 ## Requirements
 
-A software subsystem of an air-traffic control system is defined to manage a
-queue of aircraft (AC) in an airport. Write a constructor function, `AtcQueue`,
-that creates an aircraft queue.
+We have been contracted to write a software subsystem for an air traffic control
+system. This software manages a queue of aircrafts and prioritizes the orders of
+take offs and landings based on the aircraft's type and size. Write a
+constructor function, `ATCQueue`, that creates and manages the aircraft queue.
 
-The aircraft queue is managed by a
-process which responds to three types of requests:
+Aircrafts are represented by objects that have at least, but are not limited to,
+the following properties.
 
-  - Enqueue aircraft used to insert a new AC into the system. `enqueue`
-  - Dequeue aircraft used to remove an AC from the system. `dequeue`
-  - AircraftCount used to count the aircraft in the queue. `aircraftCount`
+| Property | Value |
+| - | - |
+| `type` | `passenger` or `cargo` |
+| `size` | `small` or `large` |
 
-AC have at least (but are not limited to having) the following properties:
+The aircraft queue should implement the following interface.
 
-  - AC `type`: passenger or cargo.
-  - AC `size`: small or large.
+| Method | Parameters | Return | Notes |
+| - | - | - | - |
+| `aircraftCount()` | None | Integer | Count the number of aircrafts in the queue. |
+| `enqueue()` | Aircraft | None | Add an aircraft to the queue. |
+| `dequeue()` | None | Aircraft | Remove an aircraft from the queue and return it. |
 
-The process which manages the queue of AC satisfies the following:
+The process that manages the aircraft queue satisfies the following conditions.
+-   There is no limit on the size of the aircraft queue.
+-   Aircrafts are dequeued according to their priority.
+    -   Passenger aircrafts have higher priority than cargo aircrafts.
+    -   If two aircrafts have the same type but different sizes, then the large
+        aircraft has a higher priority.
+    -   If there is more than one aircraft with the same type and size, then the
+        aircraft that was enqueued earlier has higher priority.
 
-  - There is no limit on the number of AC it can manage.
-  - Dequeue aircraft requests result in selection of one AC for removal such
-    that:
-    - Passenger AC have removal precedence over Cargo AC.
-    - Large AC of a given type have removal precedence over Small AC of the
-      same type.
-    - Earlier enqueued AC of a given type and size have precedence over later
-      enqueued AC of the same type and size.
+You should be running `grunt nag` before diagnosing any bugs, since it finds
+some of the most common sources of errors. After `grunt nag` passes, you should
+run `grunt test` to run the included tests. Tests will tell you whether of not
+you've met these requirements.
 
-Use `grunt test` to test your code.
+## Tasks
+
+Developers should run these often!
+
+-   `grunt nag` or just `grunt`: runs code quality analysis tools on your code
+    and complains.
+-   `grunt reformat`: reformats all your code in a standard style.
+-   `grunt test`: runs any automated tests; may depend on `grunt build`.
 
 ## [License](LICENSE)
 
