@@ -74,14 +74,14 @@ describe('ATCQueue', () => {
     })
 
     it('removes earlier enqueued aircrafts of the same type and size first', () => {
-      const firstPassengerLarge = Object.assign({ order: 1 }, passengerLarge)
-      const secondPassengerLarge = Object.assign({ order: 2 }, passengerLarge)
-      const firstPassengerSmall = Object.assign({ order: 1 }, passengerSmall)
-      const secondPassengerSmall = Object.assign({ order: 2 }, passengerSmall)
-      const firstCargoLarge = Object.assign({ order: 1 }, cargoLarge)
-      const secondCargoLarge = Object.assign({ order: 2 }, cargoLarge)
-      const firstCargoSmall = Object.assign({ order: 1 }, cargoSmall)
-      const secondCargoSmall = Object.assign({ order: 2 }, cargoSmall)
+      const firstPassengerLarge = Object.assign(passengerLarge)
+      const secondPassengerLarge = Object.assign(passengerLarge)
+      const firstPassengerSmall = Object.assign(passengerSmall)
+      const secondPassengerSmall = Object.assign(passengerSmall)
+      const firstCargoLarge = Object.assign(cargoLarge)
+      const secondCargoLarge = Object.assign(cargoLarge)
+      const firstCargoSmall = Object.assign(cargoSmall)
+      const secondCargoSmall = Object.assign(cargoSmall)
 
                                                   // Expected dequeue order
       this.atcQueue.enqueue(firstCargoSmall)      // 7
